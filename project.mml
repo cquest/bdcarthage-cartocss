@@ -1,0 +1,204 @@
+{
+  "bounds": [
+    -180,
+    -85.0511,
+    180,
+    85.0511
+  ],
+  "center": [
+    0,
+    48,
+    12
+  ],
+  "format": "png8",
+  "interactivity": false,
+  "minzoom": 6,
+  "maxzoom": 20,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss"
+  ],
+  "Layer": [
+    {
+      "extent": [
+        -5.403790843191354,
+        41.11522607688764,
+        9.71685307152357,
+        51.120046163892916
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT poly, toponyme, c_hyd_cdo as ref_sandre FROM bdc_surfacique WHERE type NOT LIKE 'Cours%') as plans_eau",
+        "key_field": "",
+        "geometry_field": "",
+        "extent_cache": "auto",
+        "extent": "-601547.245017416,5029352.36875146,1081675.13603506,6642556.03326006",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "plans_eau",
+        "project": "BDCarthage",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "plans_eau",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "plans_eau"
+    },
+    {
+      "geometry": "linestring",
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT troncon,largeur,toponyme FROM bdc_troncons t LEFT JOIN bdc_cours_eau c ON (c.code_hydro=t.c_hyd_cdo) WHERE navigable='Navigable') as troncons_lz",
+        "key_field": "",
+        "geometry_field": "troncon",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "troncons_lz",
+        "project": "BDCarthage",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "troncons_lz",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "troncons_lz"
+    },
+    {
+      "geometry": "linestring",
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT *,c_hyd_cdo as ref_sandre FROM bdc_troncons ORDER by etat) as troncons",
+        "key_field": "",
+        "geometry_field": "troncon",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "troncons",
+        "project": "BDCarthage",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "troncons",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "troncons"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT noeud, nature, replace(replace(toponyme,'numéro','n°'),'ecluse','ec.') as toponyme FROM bdc_noeuds WHERE nature NOT in ('Sans nature','En attente de mise à jour') ) as noeuds",
+        "key_field": "",
+        "geometry_field": "noeud",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "noeuds",
+        "project": "BDCarthage",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "noeuds",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "noeuds"
+    },
+    {
+      "extent": [
+        -5.096482188507901,
+        41.37056446812927,
+        9.557703953867072,
+        51.11994295827227
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT cours, regexp_replace(regexp_replace(toponyme,'^Ruisseau ','rui. '),'^rivière ','riv. ') as toponyme FROM bdc_cours_eau) as cours",
+        "key_field": "",
+        "geometry_field": "",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5067154.44924046,1063958.73729734,6642537.73000388",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "cours_name",
+        "project": "BDCarthage",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "cours_name",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "cours_name"
+    },
+    {
+      "geometry": "point",
+      "extent": [
+        -5.087636884432619,
+        41.364418609846716,
+        9.547008382099671,
+        51.06762176045931
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select *, regexp_replace(replace(replace(replace(nature,'Station de pompage','Sta. Pomp.'),'Réservoir','Réserv.'),'Station de traitement','Sta. Trait.'),'Château .*eau','Ch. Eau') as nat from bdc_points) as poi",
+        "key_field": "",
+        "geometry_field": "",
+        "extent_cache": "auto",
+        "extent": "-566353.147316116,5066242.8350784,1062768.11169445,6633263.95715754",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3"
+      },
+      "id": "poi",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "poi"
+    }
+  ],
+  "scale": 1,
+  "metatile": 8,
+  "_basemap": "examples.map-vyofok3q",
+  "name": "bdcarthage-cartocss",
+  "description": "Rendu partiel des données de la BD Carthage",
+  "attribution": "data ONEMA/IGN - rendu OSM-FR"
+}
