@@ -15,6 +15,16 @@ Map {  }
   }
 }
 
+#surface_eau_bdtopo [zoom >= 16] {
+  polygon-fill:magenta;
+  polygon-opacity:0.25;
+  line-width:1;
+  line-color:black;
+  [nature='Bassin'] { line-width:0.25;}
+  [regime='Intermittent'] { line-dasharray: 4,4;}
+}
+
+
 #troncons_lz [zoom>=6][zoom<=11] {
     line-color:blue;
   	line-width:4;
@@ -66,11 +76,12 @@ Map {  }
   marker-allow-overlap:true;
 }
 
+
 #troncons_bdtopo [zoom >= 16]{
     line-color:magenta;
   	line-width:2;
   	line-cap: round;
-    [fictif='Oui'] { line-dasharray: 1,10; }
+    [fictif='Oui'] { line-dasharray: 4,6; }
     text-name: [nom];
     text-face-name: "DejaVu Sans Book";
 	  text-size: 12;
@@ -79,10 +90,16 @@ Map {  }
 	  text-clip:false;
 }
 
-#troncons_bdtopo_extremites  [zoom >= 18]{
+#troncons_bdtopo_extremites  [zoom >= 16]{
   marker-width:8;
   marker-fill:magenta;
   marker-allow-overlap:true;
+  text-name: [ele];
+  text-face-name: "DejaVu Sans Oblique";
+  text-size: 12;
+  text-halo-radius:1.5;
+  text-clip:false;
+  text-dy: -8;
 }
 
 

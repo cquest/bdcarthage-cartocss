@@ -49,6 +49,34 @@
       "name": "plans_eau"
     },
     {
+      "extent": [
+        -5.403790843191354,
+        41.11522607688764,
+        9.71685307152357,
+        51.120046163892916
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT wkb_geometry, nature, regime FROM bdt_hydro_surface_eau) as surface_eau_bdtopo",
+        "key_field": "",
+        "geometry_field": "",
+        "extent_cache": "auto",
+        "extent": "-601547.245017416,5029352.36875146,1081675.13603506,6642556.03326006",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "surface_eau_bdtopo",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "surface_eau_bdtopo",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "surface_eau_bdtopo"
+    },
+    {
       "geometry": "linestring",
       "extent": [
         -5.096482188507901,
@@ -168,7 +196,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT ST_LineInterpolatePoint(wkb_geometry,0) as wkb_geometry FROM bdt_hydro_troncons where wkb_geometry && !bbox! UNION SELECT ST_LineInterpolatePoint(wkb_geometry,1) as wkb_geometry FROM bdt_hydro_troncons where wkb_geometry && !bbox!) as troncons_bdtopo_extremites ",
+        "table": "(SELECT ST_LineInterpolatePoint(wkb_geometry,0) as wkb_geometry, round(ST_Z(ST_LineInterpolatePoint(wkb_geometry,0))::numeric,1) as ele FROM bdt_hydro_troncons where wkb_geometry && !bbox! UNION SELECT ST_LineInterpolatePoint(wkb_geometry,1) as wkb_geometry, round(ST_Z(ST_LineInterpolatePoint(wkb_geometry,1))::numeric,1) as ele FROM bdt_hydro_troncons where wkb_geometry && !bbox!) as troncons_bdtopo_extremites ",
         "key_field": "",
         "extent_cache": "auto",
         "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
