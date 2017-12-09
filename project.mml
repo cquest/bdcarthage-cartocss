@@ -28,7 +28,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT poly, toponyme, c_hyd_cdo as ref_sandre FROM bdc_surfacique WHERE type NOT LIKE 'Cours%') as plans_eau",
+        "table": "(SELECT wkb_geometry, toponyme, c_hyd_cdo as ref_sandre FROM bdc_hydrographie_surfacique WHERE type NOT LIKE 'Cours%') as plans_eau",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "auto",
@@ -58,9 +58,8 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT troncon,largeur,toponyme FROM bdc_troncons t LEFT JOIN bdc_cours_eau c ON (c.code_hydro=t.c_hyd_cdo) WHERE navigable='Navigable') as troncons_lz",
+        "table": "(SELECT t.wkb_geometry,largeur,toponyme FROM bdc_troncon_hydrographique t LEFT JOIN bdc_cours_d_eau c ON (c.code_hydro=t.c_hyd_cdo) WHERE navigable='Navigable') as troncons_lz",
         "key_field": "",
-        "geometry_field": "troncon",
         "extent_cache": "auto",
         "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
         "dbname": "osm",
@@ -88,9 +87,8 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT *,c_hyd_cdo as ref_sandre FROM bdc_troncons ORDER by etat) as troncons",
+        "table": "(SELECT *,c_hyd_cdo as ref_sandre FROM bdc_troncon_hydrographique ORDER by etat) as troncons",
         "key_field": "",
-        "geometry_field": "troncon",
         "extent_cache": "auto",
         "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
         "dbname": "osm",
@@ -98,7 +96,6 @@
         "user": "fr",
         "password": "m4d31nfr4nc3",
         "id": "troncons",
-        "project": "BDCarthage",
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
       },
       "id": "troncons",
@@ -107,6 +104,87 @@
       "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
       "advanced": {},
       "name": "troncons"
+    },
+    {
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT ST_LineInterpolatePoint(wkb_geometry,0) as wkb_geometry FROM bdc_troncon_hydrographique where wkb_geometry && !bbox! UNION SELECT ST_LineInterpolatePoint(wkb_geometry,1) as wkb_geometry FROM bdc_troncon_hydrographique where wkb_geometry && !bbox!) as troncons_extremites ",
+        "key_field": "",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "troncons_extremites",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "troncons_extremites",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "troncons_extremites"
+    },
+    {
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT wkb_geometry, nom, fictif FROM bdt_hydro_troncons ORDER by pos_sol) as troncons_bdtopo",
+        "key_field": "",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "troncons_bdtopo",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "troncons_bdtopo",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "troncons_bdtopo"
+    },
+    {
+      "extent": [
+        -5.096482188507901,
+        41.116387106821044,
+        10.726595733263375,
+        51.18891065601982
+      ],
+      "Datasource": {
+        "type": "postgis",
+        "table": "(SELECT ST_LineInterpolatePoint(wkb_geometry,0) as wkb_geometry FROM bdt_hydro_troncons where wkb_geometry && !bbox! UNION SELECT ST_LineInterpolatePoint(wkb_geometry,1) as wkb_geometry FROM bdt_hydro_troncons where wkb_geometry && !bbox!) as troncons_bdtopo_extremites ",
+        "key_field": "",
+        "extent_cache": "auto",
+        "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
+        "dbname": "osm",
+        "host": "localhost",
+        "user": "fr",
+        "password": "m4d31nfr4nc3",
+        "id": "troncons_bdtopo_extremites",
+        "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
+      },
+      "id": "troncons_bdtopo_extremites",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "advanced": {},
+      "name": "troncons_bdtopo_extremites"
     },
     {
       "geometry": "point",
@@ -118,9 +196,8 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT noeud, nature, replace(replace(toponyme,'numéro','n°'),'ecluse','ec.') as toponyme FROM bdc_noeuds WHERE nature NOT in ('Sans nature','En attente de mise à jour') ) as noeuds",
+        "table": "(SELECT wkb_geometry, nature, replace(replace(toponyme,'numéro','n°'),'ecluse','ec.') as toponyme FROM bdc_noeud_hydrographique WHERE nature NOT in ('Sans nature','En attente de mise à jour') ) as noeuds",
         "key_field": "",
-        "geometry_field": "noeud",
         "extent_cache": "auto",
         "extent": "-567337.802061688,5029523.92217252,1194079.17497218,6654778.10505999",
         "dbname": "osm",
@@ -128,7 +205,6 @@
         "user": "fr",
         "password": "m4d31nfr4nc3",
         "id": "noeuds",
-        "project": "BDCarthage",
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
       },
       "id": "noeuds",
@@ -147,7 +223,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(SELECT cours, regexp_replace(regexp_replace(toponyme,'^Ruisseau ','rui. '),'^rivière ','riv. ') as toponyme FROM bdc_cours_eau) as cours",
+        "table": "(SELECT wkb_geometry, regexp_replace(regexp_replace(toponyme,'^Ruisseau ','rui. '),'^rivière ','riv. ') as toponyme FROM bdc_cours_d_eau) as cours",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "auto",
@@ -157,7 +233,6 @@
         "user": "fr",
         "password": "m4d31nfr4nc3",
         "id": "cours_name",
-        "project": "BDCarthage",
         "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"
       },
       "id": "cours_name",
@@ -177,7 +252,7 @@
       ],
       "Datasource": {
         "type": "postgis",
-        "table": "(select *, regexp_replace(replace(replace(replace(nature,'Station de pompage','Sta. Pomp.'),'Réservoir','Réserv.'),'Station de traitement','Sta. Trait.'),'Château .*eau','Ch. Eau') as nat from bdc_points) as poi",
+        "table": "(select *, regexp_replace(replace(replace(replace(nature,'Station de pompage','Sta. Pomp.'),'Réservoir','Réserv.'),'Station de traitement','Sta. Trait.'),'Château .*eau','Ch. Eau') as nat from bdc_point_eau_isole) as poi",
         "key_field": "",
         "geometry_field": "",
         "extent_cache": "auto",
@@ -197,8 +272,7 @@
   ],
   "scale": 1,
   "metatile": 8,
-  "_basemap": "examples.map-vyofok3q",
   "name": "bdcarthage-cartocss",
-  "description": "Rendu partiel des données de la BD Carthage",
-  "attribution": "data ONEMA/IGN - rendu OSM-FR"
+  "description": "Rendu partiel des données de la BD Carthage / BD Topo Hydro",
+  "attribution": "data ONEMA/IGN 2014 - AFB/IGN 2017 - rendu OSM-FR"
 }

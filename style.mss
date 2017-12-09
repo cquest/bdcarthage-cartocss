@@ -60,6 +60,32 @@ Map {  }
   	}
 }
 
+#troncons_extremites  [zoom >= 18]{
+  marker-width:8;
+  marker-fill:blue;
+  marker-allow-overlap:true;
+}
+
+#troncons_bdtopo [zoom >= 16]{
+    line-color:magenta;
+  	line-width:2;
+  	line-cap: round;
+    [fictif='Oui'] { line-dasharray: 1,10; }
+    text-name: [nom];
+    text-face-name: "DejaVu Sans Book";
+	  text-size: 12;
+    text-placement: line;
+	  text-halo-radius:1.5;
+	  text-clip:false;
+}
+
+#troncons_bdtopo_extremites  [zoom >= 18]{
+  marker-width:8;
+  marker-fill:magenta;
+  marker-allow-overlap:true;
+}
+
+
 #noeuds [zoom>=14] {
   marker-width:8;
   marker-fill:#f45;
@@ -75,23 +101,23 @@ Map {  }
   text-placement-type: simple;
   text-placements: "E,NE,SE,W,NW,SW,N,S";
   text-wrap-width: 50;
-  
-  [nature="Changement d\'attribut"]
+
+  [nature="Changement d'attribut"]
     {
     marker-fill: cyan;
     marker-width: 6;
     text-name: "";
     }
-  
+
   [nature="Source simple"]
     {
     marker-width: 0;
     text-name: "";
     }
-  
-  [nature="Barrage au fil de l\'eau avec ouvrage"],
-  [nature="Barrage au fil de l\'eau sans ouvrage"],
-  [nature="Barrage de retenue sans ouvrage"]
+
+  [nature =~ "Barrage au fil de l'eau avec ouvrage"],
+  [nature =~ "Barrage au fil de l'eau ouvrage"],
+  [nature =~ "Barrage de retenue sans ouvrage"]
 /*  [NATURE="Chutte d\'eau"],
   [NATURE="Embouchure"],
   [NATURE="Franchissement"],
@@ -110,7 +136,6 @@ Map {  }
   	text-name: [toponyme];
   	text-placement: line;
   	text-halo-radius:1.5;
-  	text-spacing: 200;
 }
 
 
